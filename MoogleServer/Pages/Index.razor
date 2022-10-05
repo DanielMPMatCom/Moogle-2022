@@ -1,0 +1,61 @@
+﻿@page "/"
+
+<PageTitle>Moogle !</PageTitle>
+
+@* <h1 class="MoogleTitle"> 🔍 Moogle!</h1> *@
+
+
+<img src="MoogleTitle.png" id="imagen" alt="🔍 Moogle!">
+
+
+<div class="Container">
+
+    <input class="SearchBar" @bind="query" placeholder="Buscar con Moogle!" @onkeyup="@SearchAfterEnter">
+    <button type="default" class="Modify" @onclick="RunQuery">🔍</button>
+</div>
+
+
+@if (!string.IsNullOrEmpty(result.Suggestion))
+{
+    <div class="suggestion">
+    <p>¿Quisiste decir <strong><a href="#" @onclick="FixQueryWithSuggestion">@result.Suggestion</a></strong>?</p>
+</div>
+}
+@if (!string.IsNullOrEmpty(query))
+{
+    <p>Se encontraron <strong>@Moogle.cantResult</strong> resultados</p>
+    <p>La búsqueda demoró <strong>@Moogle.SearchTime.TotalSeconds</strong> segundos</p>
+}
+
+<ul class="results">
+    @foreach (var item in result.Items())
+    {
+        <li>
+            <div class="item">
+                <p class="title"><strong>@item.Title</strong></p>
+                <p>... @item.Snippet ...</p>
+            </div>
+        </li>
+    }
+</ul>
+
+@code {
+    private string query = "";
+    private SearchResult result = new SearchResult();
+
+    private void RunQuery()
+    {
+        result = Moogle.Query(query);
+    }
+    private void SearchAfterEnter(KeyboardEventArgs Event)
+    //Ejecuta la búsqueda al presionar Enter
+    {
+        if (Event.Code == "Enter") RunQuery();
+    }
+    private void FixQueryWithSuggestion()
+    //Arregla la query con la sugerencia en caso de no encontrar alguna palabra de la búsqueda
+    {
+        query = result.Suggestion;
+        result.RepairSuggestion();
+    }
+}
