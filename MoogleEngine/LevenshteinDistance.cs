@@ -72,6 +72,7 @@ namespace MoogleEngine
             }
             return EditDistanceMatrix[queryword.Length, docword.Length];
         }
+        
         public static void FixedWords(Dictionary<string, int> notfoundword, Dictionary<string, double> VectorQuery)
         //Método para almacenar la palabra más cercana a cada una de las palabras de la Query que no aparecen en el Content
         {
