@@ -51,6 +51,7 @@ namespace MoogleEngine
             {
                 for (int j = 0; j <= docword.Length; j++)
                 {
+                    
                     if (i == 0)
                     {
                         EditDistanceMatrix[i, j] = j;
