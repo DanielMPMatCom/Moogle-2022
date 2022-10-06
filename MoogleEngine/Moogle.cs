@@ -36,7 +36,7 @@ public static class Moogle
             VectorQueryTF = DocumentProcess.TF_IDF(LevenshteinDistance.VectorQueryFixed(notfoundwords, VectorQuery[0]));
             //Se buscan palabras cercanas a las que no se pueden encontrar y se ofrecen resultados y sugerencias. 
             //Se calcula el TF-IDF del vector de la query con esas palabras arregladas
-            Suggestion = query;
+            Suggestion = query.ToLower();
             for (int i = 0; i < LevenshteinDistance.SimilarWords.Count; i++)
             {
                 Suggestion = Suggestion.Replace(notfoundwords.Keys.ElementAt(i), LevenshteinDistance.SimilarWords[i]);
